@@ -45,40 +45,22 @@
                             </a>
                         </li>
 
-                        <li class="sidebar-item  has-sub">
-                            <a class='sidebar-link'>
-                                <i class="bi bi-stack"></i>
-                                <span>Products</span>
-                            </a>
-                            <ul class="submenu ">
-                                <li class="submenu-item ">
-                                    <a href="">List</a>
-                                </li>
-                                <li class="submenu-item ">
-                                    <a href="">Create</a>
-                                </li>
-                                <li class="submenu-item ">
-                                    <a href="component-breadcrumb.html">Soft Delete</a>
-                                </li>
-                            </ul>
-                        </li>
+                       
 
                         <li class="sidebar-item  has-sub">
-                            <a class='sidebar-link'>
+                            <a href="{{route('admin.category.index')}}" class='sidebar-link'>
                                 <i class="bi bi-collection-fill"></i>
                                 <span>Categories</span>
                             </a>
-                            <ul class="submenu ">
-                                <li class="submenu-item ">
-                                    <a href="">List</a>
-                                </li>
-                                <li class="submenu-item ">
-                                    <a href="">Create</a>
-                                </li>
-                                <li class="submenu-item ">
-                                    <a href="extra-component-toastify.html">Soft Delete</a>
-                                </li>
-                            </ul>
+                            
+                        </li>
+
+                        <li class="sidebar-item  has-sub">
+                            <a class='sidebar-link' href="{{route('admin.post.index')}}">
+                                <i class="bi bi-stack"></i>
+                                <span>Products</span>
+                            </a>
+                          
                         </li>
 
                         <li class="sidebar-item  has-sub">
@@ -194,6 +176,7 @@
     <script src="js/pages/dashboard.js"></script>
 
     <script src="js/main.js"></script>
+    @yield('js')
 </body>
 
 </html>
