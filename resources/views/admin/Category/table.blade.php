@@ -3,19 +3,6 @@
     Danh Sách Danh Mục
 @endsection
 @section('content')
-    @if (session('success'))
-        <script>
-            alert(<?= session('messages') ?>)
-        </script>
-    @elseif(session('error'))
-        <script>
-            alert(<?= session('error') ?>)
-        </script>
-    @elseif(session('success'))
-        <script>
-            alert(<?= session('success') ?>)
-        </script>
-    @endif
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
@@ -63,10 +50,10 @@
         <div class="alert alert-danger">{{ $message }}</div>
     @enderror
     @if (session('success'))
-                        <div class="alert alert-success">
-                            {{ session('success') }}
-                        </div>
-                    @endif
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
 
     <div class="row">
 
@@ -100,7 +87,7 @@
                                 <button onclick="return confirm('bạn có chắc chắn muốn xóa?')" type="submit"
                                     class="btn btn-danger">Delete</button>
                             </form>
-                          
+
                         </td>
                     </tr>
                 @endforeach

@@ -7,19 +7,6 @@
     Danh Sách Bài Viết
 @endsection
 @section('content')
-    @if (session('success'))
-        <script>
-            alert(<?= session('messages') ?>)
-        </script>
-    @elseif(session('error'))
-        <script>
-            alert(<?= session('error') ?>)
-        </script>
-    @elseif(session('success'))
-        <script>
-            alert(<?= session('success') ?>)
-        </script>
-    @endif
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
@@ -82,7 +69,7 @@
                         </td>
 
                         <td>
-                            <p style="font-family: 'Times New Roman', Times, serif; font-size: 15px;">{{ $post['content'] }}
+                            <p style="font-family: 'Times New Roman', Times, serif; font-size: 15px;"> {!! Str::limit($post['content'], 100) !!}
                             </p>
                         </td>
                         <td>
@@ -92,11 +79,11 @@
                         </td>
                         <td>
                             <p style="font-family: 'Times New Roman', Times, serif; font-size: 15px;">
-                                {{ $post['is_approved'] }}
+                                {!! $post['is_approved']==1 ? '<span class="badge bg-primary">được đăng bài</span>': '<span class="badge bg-danger">Không được đăng bài</span>' !!}
                             </p>
                         </td>
                         <td>
-                            <p style="font-family: 'Times New Roman', Times, serif; font-size: 15px;">{{ $post['viewer'] }}
+                            <p style="font-family: 'Times New Roman', Times, serif; font-size: 15px;">{{ $post['viewer'] ?? 0 }}
                             </p>
                         </td>
                         <td>
@@ -105,8 +92,11 @@
                         </td>
                         <td>
                             <p style="font-family: 'Times New Roman', Times, serif; font-size: 15px;">
-                                {{ $post['category_id'] }}
-                            </p>
+                    @php
+                        $categoryName = $categories[$post['category_id']] ?? 'Không có danh mục';
+                    @endphp
+                    {{ $categoryName }}
+                </p>
                         </td>
                         <td>
                             <a href="{{ route('admin.post.edit', $post['slug']) }}" class="btn btn-info">Edit</a>
