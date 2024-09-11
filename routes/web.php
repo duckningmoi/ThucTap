@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,7 +21,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Route::resource('admin', AdminController::class);
 Route::prefix('admin')
 ->as('admin.')
 ->group(function(){
@@ -45,6 +45,18 @@ Route::prefix('admin')
         Route::put('/{slug}/update',[PostController::class,'update'])->name('update');
         Route::delete('/{slug}/destroy',[PostController::class,'destroy'])->name('destroy');
     });
+    Route::prefix('user')
+    ->as('user.')
+    ->group(function (){
+        Route::get('/', [UserController::class, 'index'])->name('index');
+        Route::get('/create', [UserController::class, 'create'])->name('create');
+        Route::post('/store', [UserController::class, 'store'])->name('store');
+        Route::get('/{id}/edit', [UserController::class, 'edit'])->name('edit');
+        Route::put('/{id}/update', [UserController::class, 'update'])->name('update');
+        Route::delete('/{id}/destroy', [UserController::class, 'destroy'])->name('destroy');    
+    });
+
+
 
 });
 

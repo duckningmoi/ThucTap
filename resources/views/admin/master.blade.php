@@ -64,7 +64,7 @@
                         </li>
 
                         <li class="sidebar-item  has-sub">
-                            <a class='sidebar-link'>
+                            <a class='sidebar-link' href="{{route('admin.user.index')}}">
                                 <i class="bi bi-grid-1x2-fill"></i>
                                 <span>Users</span>
                             </a>
