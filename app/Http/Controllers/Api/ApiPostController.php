@@ -7,5 +7,7 @@ use Illuminate\Http\Request;
 
 class ApiPostController extends Controller
 {
-    
+    Public function index(){
+        
+    }
 }
