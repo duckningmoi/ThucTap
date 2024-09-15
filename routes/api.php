@@ -18,4 +18,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::get('/trangchu',[ApiPostController::class,'Trangchu'])->name('trangchu');
+Route::get('/',[ApiPostController::class,'Trangchu'])->name('trangchu');
+Route::get('/header',[ApiPostController::class,'category'])->name('abc');
+
