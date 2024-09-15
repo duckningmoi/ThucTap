@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ApiPostController extends Controller
 {
@@ -34,5 +34,20 @@ class ApiPostController extends Controller
             'category' => $category,
             'posts' => $posts
         ]);
+    }
+
+    public function filterPost($id_category)
+    {
+        // Truy vấn bài viết dựa trên category_id
+        $post = DB::collection('posts')->where('category_id', $id_category)->get();
+        if ($post->isEmpty()) {
+            return response()->json([
+                'message' => 'Không có bản ghi nào'
+            ], 404);
+        }
+    
+        return response()->json([
+            'post' => $post
+        ], 200);
     }
 }
