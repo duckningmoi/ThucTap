@@ -84,7 +84,7 @@
                                                 <h4 class="card-title">Nội dung bài viết</h4>
                                             </div>
                                             <div class="card-body">
-                                                <textarea id="editor" name="content"></textarea>
+                                                <textarea  name="content"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -123,13 +123,13 @@
 
     <script src="{{ asset('vendors/ckeditor/ckeditor.js') }}"></script>
 
-    <script>
+    {{-- <script>
         ClassicEditor
             .create(document.querySelector('#editor'))
             .catch(error => {
                 console.error(error);
             });
-    </script>
+    </script> --}}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const addButton = document.getElementById('add-image');
