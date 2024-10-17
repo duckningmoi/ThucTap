@@ -13,11 +13,12 @@ class ApiPostController extends Controller
     {
         // bài viết
         // Lấy ngày hôm nay
-        // $today = Carbon::today()->toDateString();
+        $today = Carbon::today()->toDateString();
 
         // Truy vấn MongoDB
         $post = DB::table('posts')
             ->where('is_approved', "1")
+            ->where('created_at', $today)
             ->get();
         return response()->json([
             'post' => $post
@@ -32,14 +33,15 @@ class ApiPostController extends Controller
         ], 200);
     }
     // bài viết theo danh mục 
-    public function PostDetail(Request $request ,string $slug){
-        // $post=DB::table('posts')->firstOrFail($slug);
+    public function PostDetail(Request $request, string $slug)
+    {
         $post = DB::collection('posts')->where('slug', $slug)->first();
         if (!$post) {
             return response()->json([
                 'message' => 'Không có bản ghi nào'
             ], 404);
         }
+        DB::collection('posts')->where('slug', $slug)->update(['view' => $post['view'] + 1]);
         return response()->json([
             'post' => $post
         ], 200);

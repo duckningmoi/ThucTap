@@ -1,5 +1,7 @@
 <?php
 
+
+use App\Http\Controllers\Admin\AddsController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\UserController;
@@ -56,7 +58,16 @@ Route::prefix('admin')
         Route::delete('/{id}/destroy', [UserController::class, 'destroy'])->name('destroy');    
     });
 
-
+    Route::prefix('adss')
+    ->as('adss.')
+    ->group(function (){
+        Route::get('/', [AddsController::class, 'index'])->name('index');
+        Route::get('/create', [AddsController::class, 'create'])->name('create');
+        Route::post('/store', [AddsController::class, 'store'])->name('store');
+        Route::get('/{id}/edit', [AddsController::class, 'edit'])->name('edit');
+        Route::put('/{id}/update', [AddsController::class, 'update'])->name('update');
+        Route::delete('/{id}/destroy', [AddsController::class, 'destroy'])->name('destroy');    
+    });
 
 });
 

@@ -27,91 +27,67 @@
         </div>
     @endif
 
-    <div class="row">
-
-        <table class="table w-50 ms-xxl-5" border="1">
-           
-            <thead>
-                <a href="{{route('admin.post.create')}}" class="btn btn-primary">thêm bài viết</a>
-                <tr>
-                    <th>STT</th>
-                    <th>Name</th>
-                    <th>Image</th>
-                    <th>Content</th>
-                    <th>Location</th>
-                    <th>Is_approved</th>
-                    <th>Viewer</th>
-                    <th>User_id</th>
-                    <th>Category_id</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @php
-                    $stt = 1;
-                @endphp
-                @foreach ($posts as $post)
-                    <tr>
-                        <td>
-                            <p style="font-family: 'Times New Roman', Times, serif; font-size: 15px;">{{ $stt++ }}
-                            </p>
-                        </td>
-                        <td>
-                            <p style="font-family: 'Times New Roman', Times, serif; font-size: 15px;">{{ $post['name'] }}
-                            </p>
-                        </td>
-                        <td>
-                            @if ($post['image'])
-                                <img src="{{ Storage::url($post['image']) }}" alt="Hình ảnh" width="100px">
-                            @else
-                                không có ảnh
-                            @endif
-                        </td>
-
-                        <td>
-                            <p style="font-family: 'Times New Roman', Times, serif; font-size: 15px;"> {!! Str::limit($post['content'], 100) !!}
-                            </p>
-                        </td>
-                        <td>
-                            <p style="font-family: 'Times New Roman', Times, serif; font-size: 15px;">
-                                {{ $post['location'] }}
-                            </p>
-                        </td>
-                        <td>
-                            <p style="font-family: 'Times New Roman', Times, serif; font-size: 15px;">
-                                {!! $post['is_approved']==1 ? '<span class="badge bg-primary">được đăng bài</span>': '<span class="badge bg-danger">Không được đăng bài</span>' !!}
-                            </p>
-                        </td>
-                        <td>
-                            <p style="font-family: 'Times New Roman', Times, serif; font-size: 15px;">{{ $post['viewer'] ?? 0 }}
-                            </p>
-                        </td>
-                        <td>
-                            <p style="font-family: 'Times New Roman', Times, serif; font-size: 15px;">{{ $post['user_id'] }}
-                            </p>
-                        </td>
-                        <td>
-                            <p style="font-family: 'Times New Roman', Times, serif; font-size: 15px;">
-                    @php
-                        $categoryName = $categories[$post['category_id']] ?? 'Không có danh mục';
-                    @endphp
-                    {{ $categoryName }}
-                </p>
-                        </td>
-                        <td>
-                            <a href="{{ route('admin.post.edit', $post['slug']) }}" class="btn btn-info">Edit</a>
-                            <form action="{{ route('admin.post.destroy', $post['slug']) }}" method="post">
-                                @csrf
-                                @method('DELETE')
-                                <button onclick="return confirm('bạn có chắc chắn muốn xóa?')" type="submit"
-                                    class="btn btn-danger">Delete</button>
-                            </form>
-
-                        </td>
-                    </tr>
-                @endforeach
-
-            </tbody>
-        </table>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <a href="{{ route('admin.post.create') }}" class="btn btn-primary mb-3">Thêm Bài Viết</a>
+                <table class="table table-bordered table-hover">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>STT</th>
+                            <th>Tên</th>
+                            <th>Ảnh</th>
+                            <th>Nội Dung</th>
+                            <th>Địa Điểm</th>
+                            <th>Trạng Thái</th>
+                            <th>Người Xem</th>
+                            <th>ID Người Dùng</th>
+                            <th>ID Danh Mục</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @php
+                            $stt = 1;
+                        @endphp
+                        @foreach ($posts as $post)
+                            <tr>
+                                <td>{{ $stt++ }}</td>
+                                <td>{{ $post['name'] }}</td>
+                                <td>
+                                    @if ($post['image'])
+                                        <img src="{{ Storage::url($post['image']) }}" alt="Hình ảnh" width="100">
+                                    @else
+                                        Không có ảnh
+                                    @endif
+                                </td>
+                                <td>{!! Str::limit($post['content'], 100) !!}</td>
+                                <td>{{ $post['location'] }}</td>
+                                <td>
+                                    {!! $post['is_approved'] == 1 ? '<span class="badge bg-success">Được Đăng</span>' : '<span class="badge bg-danger">Không Được Đăng</span>' !!}
+                                </td>
+                                <td>{{ $post['viewer'] ?? 0 }}</td>
+                                <td>{{ $post['user_id'] }}</td>
+                                <td>
+                                    @php
+                                        $categoryName = $categories[$post['category_id']] ?? 'Không có danh mục';
+                                    @endphp
+                                    {{ $categoryName }}
+                                </td>
+                                <td>
+                                    <a href="{{ route('admin.post.edit', $post['slug']) }}" class="btn btn-info btn-sm">Edit</a>
+                                    <form action="{{ route('admin.post.destroy', $post['slug']) }}" method="post" style="display:inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button onclick="return confirm('Bạn có chắc chắn muốn xóa?')" type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
+    
 @endsection

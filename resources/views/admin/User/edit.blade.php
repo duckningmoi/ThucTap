@@ -3,56 +3,54 @@
     Sửa bài viết
 @endsection
 @section('content')
-    <section class="section">
-        <div class="card">
-            <div class="card-header">
-            </div>
+<section class="section">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Cập Nhật Thông Tin Người Dùng</h4>
+        </div>
 
-            <form action="{{ route('admin.user.update', $user['_id']) }}" method="post" enctype="multipart/form-data">
-                @csrf
-                @method('PUT')
-                <div class="card-body">
-                <div class="card-body">
+        <form action="{{ route('admin.user.update', $user['_id']) }}" method="post" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
+            <div class="card-body">
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="basicInput">Tên người dùng</label>
-                            <input type="text" class="form-control" id="basicInput" placeholder="tên người dùng" name="name" value="{{ $user['name'] }}">
+                        <div class="form-group mb-3">
+                            <label for="name" class="form-label">Tên người dùng</label>
+                            <input type="text" class="form-control" id="name" placeholder="Tên người dùng" name="name" value="{{ $user['name'] }}" required>
+                            @error('name')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
-                        @error('name')
-                        <div class="alert alert-danger">{{ $message }}</div>
-                        @enderror
-                    </div> <br>
 
-
-                    <div class="form-group">
-                        <label for="basicInput">Email</label>
-                        <input type="email" class="w-50 form-control" id="basicInput" placeholder="email" name="email" value="{{ $user['email'] }}">
+                        <div class="form-group mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" placeholder="Email" name="email" value="{{ $user['email'] }}" required>
+                            @error('email')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
                     </div>
-                    @error('email')
-                    <div class="alert alert-danger">{{ $message }}</div>
-                    @enderror
-                </div> <br>
 
-
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="basicInput">Password</label>
-                        <input type="text" class="form-control" id="basicInput" placeholder="password" name="password" value="{{ $user['password'] }}">
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <label for="password" class="form-label">Mật khẩu</label>
+                            <input type="password" class="form-control" id="password" placeholder="Mật khẩu (để trống nếu không thay đổi)" name="password" value="{{$user['password']}}">
+                            @error('password')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
                     </div>
-                    @error('password')
-                    <div class="alert alert-danger">{{ $message }}</div>
-                    @enderror
-
-                </div> <br>
-
-
-            </div>
-                    <button type="submit">Update</button>
                 </div>
-            </form>
-        </div>
-    </section>
+
+                <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary">Cập Nhật</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
 @endsection
 
 @section('js')

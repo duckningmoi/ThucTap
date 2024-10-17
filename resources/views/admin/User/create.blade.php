@@ -18,6 +18,7 @@ Thêm bài viết
 <section class="section">
     <div class="card">
         <div class="card-header">
+            <h4 class="card-title">Thêm Người Dùng Mới</h4>
         </div>
 
         <form class="container" action="{{ route('admin.user.store') }}" method="post" enctype="multipart/form-data">
@@ -25,46 +26,47 @@ Thêm bài viết
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="basicInput">Tên người dùng</label>
-                            <input type="text" class="form-control" id="basicInput" placeholder="tên người dùng" name="name">
+                        <div class="form-group mb-3">
+                            <label for="name" class="form-label">Tên người dùng</label>
+                            <input type="text" class="form-control" id="name" placeholder="Tên người dùng" name="name" required>
+                            @error('name')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
-                        @error('name')
-                        <div class="alert alert-danger">{{ $message }}</div>
-                        @enderror
-                    </div> <br>
 
-
-                    <div class="form-group">
-                        <label for="basicInput">Email</label>
-                        <input type="email" class="w-50 form-control" id="basicInput" placeholder="email" name="email">
+                        <div class="form-group mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" placeholder="Email" name="email" required>
+                            @error('email')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
                     </div>
-                    @error('email')
-                    <div class="alert alert-danger">{{ $message }}</div>
-                    @enderror
-                </div> <br>
 
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <label for="password" class="form-label">Mật khẩu</label>
+                            <input type="password" class="form-control" id="password" placeholder="Mật khẩu" name="password" required>
+                            @error('password')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
 
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="basicInput">Password</label>
-                        <input type="password" class="form-control" id="basicInput" placeholder="password" name="password">
+                        <div class="form-group mb-3">
+                            <label for="password_confirmation" class="form-label">Nhập lại Mật khẩu</label>
+                            <input type="password" class="form-control" id="password_confirmation" placeholder="Xác nhận mật khẩu" name="password_confirmation" required>
+                        </div>
                     </div>
-                    @error('password')
-                    <div class="alert alert-danger">{{ $message }}</div>
-                    @enderror
-                    <div class="form-group">
-                        <label for="basicInput">Nhập lại Password </label>
-                        <input type="password" class="form-control" id="basicInput" placeholder="password confirm" name="password_confirmation">
-                    </div>
-                </div> <br>
+                </div>
 
-
+                <div class="d-flex justify-content-end">
+                    <button class="btn btn-success" type="submit">Tạo Mới</button>
+                </div>
             </div>
-            <button class="btn btn-success" type="submit">Create</button>
         </form>
     </div>
 </section>
+
 @endsection
 
 @section('js')
