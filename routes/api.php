@@ -19,6 +19,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::get('/',[ApiPostController::class,'Trangchu'])->name('trangchu');
-Route::get('/header',[ApiPostController::class,'category'])->name('abc');
+Route::get('/category',[ApiPostController::class,'category'])->name('abc');
 Route::get('/post/{id_category}',[ApiPostController::class,'filterPost'])->name('abc');
 Route::get('/search-posts', [ApiPostController::class, 'searchPosts']);
+Route::get('/postDetail/{slug}',[ApiPostController::class,'PostDetail']);
+

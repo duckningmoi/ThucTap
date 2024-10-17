@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+
 use App\Models\Category;
 use App\Models\Post;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -13,12 +15,19 @@ class ApiPostController extends Controller
     public function Trangchu()
     {
         // bài viết
-        $post = DB::table('posts')->where('is_approved', "1")->get();
+        // Lấy ngày hôm nay
+        $today = Carbon::today()->toDateString();
+
+        // Truy vấn MongoDB
+        $post = DB::table('posts')
+            ->where('is_approved', "1")
+            ->where('created_at', $today)
+            ->get();
         return response()->json([
             'post' => $post
         ], 200);
     }
-    // đầu header
+
     public function category()
     {
         $category = DB::table('categories')->get();
@@ -27,24 +36,37 @@ class ApiPostController extends Controller
         ], 200);
     }
     // bài viết theo danh mục 
+
     public function PostCate(Request $request, string $slug)
     {
         $category = DB::table('categories')->where('slug', $slug)->first();
         $posts = DB::table('posts')
             ->where('category_id', $category->id)
             ->get();
+    public function PostDetail(Request $request, string $slug)
+    {
+        $post = DB::collection('posts')->where('slug', $slug)->first();
+        if (!$post) {
+            return response()->json([
+                'message' => 'Không có bản ghi nào'
+            ], 404);
+        }
+        DB::collection('posts')->where('slug', $slug)->update(['view' => $post['view'] + 1]);
         return response()->json([
-            'category' => $category,
-            'posts' => $posts
-        ]);
+            'post' => $post
+        ], 200);
     }
 
     public function filterPost($id_category)
     {
-        // Truy vấn bài viết dựa trên category_id
+
         $post = DB::collection('posts')
             ->where('category_id', $id_category)
             ->get();
+        $today = Carbon::today()->toDateString();
+        $post = DB::collection('posts')->where('category_id', $id_category)
+        // ->whereDate('created_at', $today)
+        ->get();
         if ($post->isEmpty()) {
             return response()->json([
                 'message' => 'Không có bản ghi nào'
