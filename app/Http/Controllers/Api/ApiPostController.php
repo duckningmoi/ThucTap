@@ -36,13 +36,6 @@ class ApiPostController extends Controller
         ], 200);
     }
     // bài viết theo danh mục 
-
-    public function PostCate(Request $request, string $slug)
-    {
-        $category = DB::table('categories')->where('slug', $slug)->first();
-        $posts = DB::table('posts')
-            ->where('category_id', $category->id)
-            ->get();
     public function PostDetail(Request $request, string $slug)
     {
         $post = DB::collection('posts')->where('slug', $slug)->first();
