@@ -1,10 +1,9 @@
 <div>
     <!-- Because you are alive, everything is possible. - Thich Nhat Hanh -->
 </div>
-
 @extends('admin.master')
 @section('title')
-Danh Sách Bài Viết
+Danh Sách Quảng cáo 
 @endsection
 @section('content')
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -30,36 +29,38 @@ Danh Sách Bài Viết
 <div class="container">
     <div class="row">
         <div class="col-12">
-            <a href="{{ route('admin.user.create') }}" class="btn btn-success mb-3">Thêm Mới</a>
+            <a href="{{ route('admin.adss.create') }}" class="mb-3 btn btn-success">Thêm Mới</a>
             <table class="table table-bordered table-hover">
                 <thead class="thead-light">
                     <tr>
                         <th>STT</th>
-                        <th>Tên</th>
-                        <th>Email</th>
-                        <th>Mật Khẩu</th>
-                        <th>Action</th>
+                        <th>Ảnh quảng cáo</th>
+                        <th>Link quảng cáo</th>
+                        <th>Vị trí</th>
+                        <th>Trạng thái</th>
                     </tr>
                 </thead>
                 <tbody>
                     @php
-                        $stt = 1;
+                    $stt = 1;
                     @endphp
-                    @foreach ($users as $user)
-                        <tr>
-                            <td>{{ $stt++ }}</td>
-                            <td>{{ $user['name'] }}</td>
-                            <td>{{ $user['email'] }}</td>
-                            <td>******</td> <!-- Giấu mật khẩu -->
-                            <td>
-                                <a href="{{ route('admin.user.edit', (string)$user['_id']) }}" class="btn btn-info btn-sm">Edit</a>
-                                <form action="{{ route('admin.user.destroy', $user['_id']) }}" method="post" style="display:inline;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button onclick="return confirm('Bạn có chắc chắn muốn xóa?')" type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                </form>
-                            </td>
-                        </tr>
+                    @foreach ($adss as $ads)
+                    <tr>
+                        <td>{{ $stt++ }}</td>
+                        <td>
+                            <img src="{{ Storage::url($ads['image']) }}" alt="Ảnh quảng cáo" width="100">
+                        </td>
+                        <td>{{ $ads['link_url'] }}</td>
+                        <td>{{ $ads['vitri'] }}</td>
+                        <td>
+                            <a href="{{ route('admin.adss.edit', (string)$ads['_id']) }}" class="btn btn-info btn-sm">Edit</a>
+                            <form action="{{ route('admin.adss.destroy', $ads['_id']) }}" method="post" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button onclick="return confirm('Bạn có chắc chắn muốn xóa?')" type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
                     @endforeach
                 </tbody>
             </table>

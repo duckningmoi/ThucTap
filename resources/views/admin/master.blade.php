@@ -58,7 +58,7 @@
                         <li class="sidebar-item  has-sub">
                             <a class='sidebar-link' href="{{route('admin.post.index')}}">
                                 <i class="bi bi-stack"></i>
-                                <span>Products</span>
+                                <span>post</span>
                             </a>
                           
                         </li>
@@ -82,9 +82,9 @@
                         </li>
 
                         <li class="sidebar-item  has-sub">
-                            <a class='sidebar-link'>
+                            <a class='sidebar-link' href="{{route('admin.adss.index')}}">
                                 <i class="bi bi-stack"></i>
-                                <span>Posts</span>
+                                <span>adss</span>
                             </a>
                             <ul class="submenu ">
                                 <li class="submenu-item ">

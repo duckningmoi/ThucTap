@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -40,7 +41,7 @@ class UserController extends Controller
             $data = [
                 'name' => $request->name,
                 'email' => $request->email,
-                'password' => $request->password
+                'password' => Hash::make($request->password)
             ];
             DB::table('user')->insert($data);
             return redirect()->route('admin.user.index')->with('success', 'Thêm mới thành công');
@@ -72,10 +73,16 @@ class UserController extends Controller
      */
     public function update(StoreUserRequest $request, string $id)
     {
+        $user = DB::table('user')->where('id', $id)->first();
+        if($request->password){
+            $password=Hash::make($request->password);
+        }else{
+            $password=$user['password'];
+        }
             $data = [
                 'name' => $request->name,
                 'email' => $request->email,
-                'password' => $request->password
+                'password' => $password,
             ];
             DB::table('user')
             ->where('_id', $id)

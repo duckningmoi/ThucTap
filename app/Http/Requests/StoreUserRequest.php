@@ -24,7 +24,7 @@ class StoreUserRequest extends FormRequest
         return [
             'name' => 'required',
             'email' => 'required|email',
-            'password' => 'required|min:6|confirmed',
+            'password' => 'required|min:6',
         ];
     }
 
@@ -33,7 +33,7 @@ class StoreUserRequest extends FormRequest
         return [
             'name'=>'vui lòng không bỏ trống trường tên ',
             'email'=>'vui lòng không bỏ trống trường email ',
-            'password'=>'password không để trống, dài hơn 6 ký tự , phải trùng nhau',
+            'password'=>'password không để trống, dài hơn 6 ký tự',
         ];
     }
 }

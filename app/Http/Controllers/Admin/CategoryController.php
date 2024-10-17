@@ -16,6 +16,10 @@ class CategoryController extends Controller
         $categories = DB::table('categories')->get();
         return view('admin.Category.table', compact('categories'));
     }
+    public function create()
+    {
+        return view('admin.Category.create');
+    }
     public function store(StoreCategoryRequest $request)
     {
         if ($request->isMethod('POST')) {
@@ -31,15 +35,15 @@ class CategoryController extends Controller
     public function edit(string $slug)
     {
         $category = DB::table('categories')->where('slug', $slug)->first();
-        return view('admin.Category.edit',compact('category'));
+        return view('admin.Category.edit', compact('category'));
     }
     public function update(StoreCategoryRequest $request, $slug)
     {
-    //    var_dump($request->all());
-    //    exit();
+        //    var_dump($request->all());
+        //    exit();
         $category = DB::table('categories')->where('slug', $slug)->first();
         if ($request->isMethod('PUT')) {
-            $param = $request->except('_token','_method');
+            $param = $request->except('_token', '_method');
             DB::table('categories')->where('slug', $slug)->update($param);
             return redirect()->route('admin.category.index')->with('success', 'Sửa danh mục thành công');
         }

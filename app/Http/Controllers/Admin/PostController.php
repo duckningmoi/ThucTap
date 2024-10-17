@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Str;
@@ -53,6 +54,9 @@ class PostController extends Controller
             $validatedData['slug'] = $slug;
             // tạm thời fix cứng là 1;
             $validatedData['user_id'] = 1;
+            $validatedData['view'] =0;
+            $validatedData['created_at'] = Carbon::now()->format('Y-m-d');
+            // dd($validatedData['created_at']);
             $postId = DB::table('posts')->insertGetId($validatedData);
             if ($request->hasFile('images')) {
                 $tieude = $request->input('tieude');
@@ -107,8 +111,6 @@ class PostController extends Controller
         $post = DB::table('posts')->where('slug', $slug)->first();
         $postId=$post['_id'];
         // $imagePost = DB::table('post_images')->where('post_id', $postId)->get();
-                    
-
         if (!$post) {
             return redirect()->back()->withErrors(['error' => 'Không có trang.']);
         }

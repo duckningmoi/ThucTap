@@ -17,34 +17,6 @@
 
     <!-- Responsive tables start -->
 
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        Create
-    </button>
-
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{ route('admin.category.store') }}" method="post">
-                        @csrf
-                        <input type="text" name="name" placeholder="Tên Danh Mục">
-                        <button type="submit">Thêm Mới</button>
-                    </form>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
 
     @error('name')
         <div class="alert alert-danger">{{ $message }}</div>
@@ -55,44 +27,40 @@
         </div>
     @endif
 
-    <div class="row">
-
-        <table class="table w-50 ms-xxl-5" border="1">
-            <thead>
-                <tr>
-                    <th>STT</th>
-                    <th>Tên Danh Mục</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @php
-                    $stt = 1;
-                @endphp
-                @foreach ($categories as $cate)
-                    <tr>
-                        <td>
-                            <p style="font-family: 'Times New Roman', Times, serif; font-size: 15px;">{{ $stt++ }}
-                            </p>
-                        </td>
-                        <td>
-                            <p style="font-family: 'Times New Roman', Times, serif; font-size: 15px;">{{ $cate['name'] }}
-                            </p>
-                        </td>
-                        <td>
-                            <a href="{{ route('admin.category.edit', $cate['slug']) }}" class="btn btn-info">Edit</a>
-                            <form action="{{ route('admin.category.destroy', $cate['slug']) }}" method="post">
-                                @csrf
-                                @method('DELETE')
-                                <button onclick="return confirm('bạn có chắc chắn muốn xóa?')" type="submit"
-                                    class="btn btn-danger">Delete</button>
-                            </form>
-
-                        </td>
-                    </tr>
-                @endforeach
-
-            </tbody>
-        </table>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <a href="{{ route('admin.category.create') }}" class="btn btn-primary mb-3">Thêm danh mục</a>
+                <table class="table table-bordered table-hover">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>STT</th>
+                            <th>Tên Danh Mục</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @php
+                            $stt = 1;
+                        @endphp
+                        @foreach ($categories as $cate)
+                            <tr>
+                                <td>{{ $stt++ }}</td>
+                                <td>{{ $cate['name'] }}</td>
+                                <td>
+                                    <a href="{{ route('admin.category.edit', $cate['slug']) }}" class="btn btn-info btn-sm">Edit</a>
+                                    <form action="{{ route('admin.category.destroy', $cate['slug']) }}" method="post" style="display:inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button onclick="return confirm('Bạn có chắc chắn muốn xóa?')" type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
+    
 @endsection
