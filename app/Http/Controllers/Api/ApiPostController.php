@@ -58,8 +58,8 @@ class ApiPostController extends Controller
             ->get();
         $today = Carbon::today()->toDateString();
         $post = DB::collection('posts')->where('category_id', $id_category)
-        // ->whereDate('created_at', $today)
-        ->get();
+            // ->whereDate('created_at', $today)
+            ->get();
         if ($post->isEmpty()) {
             return response()->json([
                 'message' => 'Không có bản ghi nào'
@@ -73,19 +73,19 @@ class ApiPostController extends Controller
 
     public function searchPosts(Request $request)
     {
+        $oid = '';
         $query = DB::table('posts');
         $category = DB::table('categories');
         if ($request->filled('keyword')) {
-           $cate = $category->where('name', 'LIKE', '%' . $request->keyword . '%')->select('_id')->first();
-           $oid = (string)$cate['_id']; 
-                $query->orWhere('name', 'LIKE', '%' . $request->keyword . '%')
-                    ->orWhere('location', 'LIKE', '%' . $request->keyword . '%')
-                    ->orWhere('category_id',$oid);
-                    $results = $query->get();
+            $cate = $category->where('name', 'LIKE', '%' . $request->keyword . '%')->select('_id')->first();
+            if ($cate) {
+                $oid = (string)$cate['_id'];
+            }
+            $query->orWhere('name', 'LIKE', '%' . $request->keyword . '%')
+                ->orWhere('location', 'LIKE', '%' . $request->keyword . '%')
+                ->orWhere('category_id', $oid);
+            $results = $query->get();
             return response()->json($results);
         }
-
-
-
     }
 }
