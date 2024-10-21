@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Post;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class ApiPostController extends Controller
@@ -44,12 +45,16 @@ class ApiPostController extends Controller
                 'message' => 'Không có bản ghi nào'
             ], 404);
         }
+        // $post_id = $post['_id'];
+        $post_id = (string) $post['_id'];
+        $comments = DB::collection('comments')->where('post_id', $post_id)->get()->toArray();
         DB::collection('posts')->where('slug', $slug)->update(['view' => $post['view'] + 1]);
         return response()->json([
-            'post' => $post
+            'post' => $post,
+            'post_id' => $post_id,
+            'comments' => $comments
         ], 200);
     }
-
     public function filterPost($id_category)
     {
 
@@ -78,14 +83,50 @@ class ApiPostController extends Controller
         $category = DB::table('categories');
         if ($request->filled('keyword')) {
             $cate = $category->where('name', 'LIKE', '%' . $request->keyword . '%')->select('_id')->first();
-            if ($cate) {
-                $oid = (string)$cate['_id'];
-            }
+
+            $oid = (string) $cate['_id'];
+
+//             if ($cate) {
+//                 $oid = (string)$cate['_id'];
+//             }
+
             $query->orWhere('name', 'LIKE', '%' . $request->keyword . '%')
                 ->orWhere('location', 'LIKE', '%' . $request->keyword . '%')
                 ->orWhere('category_id', $oid);
             $results = $query->get();
             return response()->json($results);
         }
+
+
+    }
+    // public function comment($_id)
+    // {
+    //     $comments = DB::collection('comments')->where('post_id', $_id)->get()->toArray();
+    //     return response()->json($comments, 200);
+    // }
+    public function PostComment(Request $request, string $slug)
+    {
+        $posts = DB::collection('posts')->where('slug', $slug)->first();
+
+        if (!$posts) {
+            return response()->json(['message' => 'Bài viết không tìm thấy'], 404);
+        }
+
+        $post_id = (string) $posts['_id'];
+        $context = $request->input('content');
+
+        $PostComment = [
+            'post_id' => $post_id,
+            'user_id' => $request->input('user_id'),
+            'content' => $context,
+            'created_at' => Carbon::now()->format('Y-m-d'),
+        ];
+        $commentId = DB::collection('comments')->insertGetId($PostComment);
+
+        return response()->json([
+            'message' => 'Comment thành công',
+            'comment_id' => $commentId,
+        ], 201);
+
     }
 }
