@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ApiAuthenticateController;
 use App\Http\Controllers\Api\ApiPostController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,4 +24,8 @@ Route::get('/category',[ApiPostController::class,'category'])->name('abc');
 Route::get('/post/{id_category}',[ApiPostController::class,'filterPost'])->name('abc');
 Route::get('/search-posts', [ApiPostController::class, 'searchPosts']);
 Route::get('/postDetail/{slug}',[ApiPostController::class,'PostDetail']);
+Route::post('login',[ApiAuthenticateController::class,'login']);
+Route::post('register',[ApiAuthenticateController::class,'register']);
+Route::post('logout',[ApiAuthenticateController::class,'logout'])->middleware('auth:sanctum');
+Route::post('/comments/{slug}', [ApiPostController::class, 'PostComment']);
 
