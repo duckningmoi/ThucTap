@@ -78,17 +78,25 @@ class ApiPostController extends Controller
 
     public function searchPosts(Request $request)
     {
+        $oid = '';
         $query = DB::table('posts');
         $category = DB::table('categories');
         if ($request->filled('keyword')) {
             $cate = $category->where('name', 'LIKE', '%' . $request->keyword . '%')->select('_id')->first();
+
             $oid = (string) $cate['_id'];
+
+//             if ($cate) {
+//                 $oid = (string)$cate['_id'];
+//             }
+
             $query->orWhere('name', 'LIKE', '%' . $request->keyword . '%')
                 ->orWhere('location', 'LIKE', '%' . $request->keyword . '%')
                 ->orWhere('category_id', $oid);
             $results = $query->get();
             return response()->json($results);
         }
+
 
     }
     // public function comment($_id)
@@ -119,5 +127,6 @@ class ApiPostController extends Controller
             'message' => 'Comment thành công',
             'comment_id' => $commentId,
         ], 201);
+
     }
 }
