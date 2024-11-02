@@ -1,0 +1,525 @@
+.container {
+    max-width: 1172px;
+}
+/* đăng kí */
+.register-container {
+    width: 400px;
+    margin: 50px auto;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #f0f0f0;
+    margin-bottom: 20px;
+}
+
+.date {
+    font-size: 14px;
+    color: #888;
+}
+
+.icons {
+    display: flex;
+    gap: 10px;
+}
+
+h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.social-btn {
+    margin-bottom: 10px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.input-field {
+    margin-bottom: 15px;
+}
+
+.register-btn {
+    background-color: #6d28d9;
+    color: white;
+}
+
+.footer {
+    margin-top: 20px;
+}
+
+.footer a {
+    color: #6d28d9;
+}
+
+/* Đăng nhập */
+.login-container {
+    width: 400px;
+    margin: 50px auto;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.social-btn {
+    margin-bottom: 10px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.input-field {
+    margin-bottom: 15px;
+}
+
+.remember-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.remember-checkbox {
+    font-size: 14px;
+}
+
+.forgot-password-link {
+    font-size: 14px;
+    color: #6d28d9;
+}
+
+.login-btn {
+    background-color: #6d28d9;
+    color: white;
+}
+
+.policy-section {
+    margin-top: 20px;
+    font-size: 12px;
+    color: #888;
+}
+
+.policy-section a {
+    color: #6d28d9;
+}
+
+.footer {
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.footer a {
+    color: #6d28d9;
+}
+
+
+/* Đặt logo và menu trong container với flexbox */
+header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.navbar {
+    width: 100%;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    /* Cân chỉnh menu với logo */
+    align-items: center;
+    width: 1000px;
+}
+
+.navbar-nav {
+    display: flex;
+    justify-content: space-around;
+    /* Phân bố đều các mục menu */
+    width: 100%;
+
+    /* Đảm bảo menu giãn ra hết chiều rộng */
+}
+
+.nav-link {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #555;
+    text-decoration: none;
+}
+
+.nav-link:hover {
+    color: #007bff;
+    text-decoration: underline;
+}
+
+/* Đảm bảo phần logo và các mục bên trên thẳng hàng */
+.logo-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+}
+
+.logo-container img {
+    margin-right: 10px;
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-brand span {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+/* Căn chỉnh phần tìm kiếm và các biểu tượng */
+.search-bar {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}
+
+.search-bar input {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 0.5rem;
+}
+
+.search-bar button {
+    margin-left: 5px;
+    border: none;
+    background-color: transparent;
+}
+
+.register-link {
+    margin-left: 20px;
+    font-size: 1rem;
+    color: #333;
+    text-decoration: none;
+}
+
+.register-link:hover {
+    color: #007bff;
+    text-decoration: underline;
+}
+
+/* Footer */
+footer {
+    background-color: #f8f9fa;
+    /* Light gray background */
+    padding: 20px 0;
+    border-top: 1px solid #dee2e6;
+    /* Thin top border */
+    font-size: 14px;
+    /* General font size */
+    color: #6c757d;
+    /* Muted text color */
+    
+}
+
+footer h6 {
+    font-size: 16px;
+    font-weight: bold;
+    color: #000;
+    /* Bold black text for the header */
+}
+
+footer p {
+    margin: 0;
+    color: #6c757d;
+    /* Default text color */
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+footer a {
+    color: #6c757d;
+    text-decoration: none;
+}
+
+footer a:hover {
+    color: #000;
+    text-decoration: underline;
+}
+
+footer .container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    
+}
+
+
+@media (max-width: 768px) {
+    footer .container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+
+    
+}
+
+
+/* Content */
+
+.news-container {
+    display: flex;
+    padding: 20px;
+    background-color: #fff;
+}
+
+/* Main content section on the left */
+.main-content {
+    width: 70%;
+    margin-right: 30px;
+}
+
+
+/* Sidebar on the right */
+.news-sidebar {
+    width: 30%;
+    padding-left: 20px;
+    border-left: 1px solid #ddd;
+}
+
+.news-sidebar h3 {
+    font-size: 20px;
+    color: #a21717;
+    border-bottom: 2px solid #a21717;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+}
+
+.news-sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.news-sidebar ul li {
+    margin-bottom: 10px;
+    font-size: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
+
+.news-sidebar ul li a {
+    text-decoration: none;
+    color: #333;
+}
+
+.news-sidebar ul li span {
+    color: #888;
+    font-size: 14px;
+}
+
+/* Main news content styling */
+.news-content {
+    display: flex;
+    width: 100%;
+    margin-bottom: 30px;
+    background-color: #f9f9f9;
+}
+
+.image-section img {
+    width: 2000px;
+
+    height: 300px;
+    object-fit: cover;
+}
+
+.content-section {
+    padding-left: 20px;
+    max-width: 600px;
+    height: 250px;
+    
+}
+.section {
+    padding-left: 20px;
+
+}
+
+.content-section h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+
+.content-section p {
+    font-size: 16px;
+    color: #555;
+}
+
+.section p {
+    font-size: 20px;
+    color: #555;
+}
+
+.back-icon button {
+    border: 1px solid #555 ;
+    border-radius: 2px;
+    padding: 5px 10px;
+    margin-bottom: 20px;
+}
+
+.binhluan {
+    padding-bottom: 25px;
+    border-bottom: 1px solid #ddd;
+}
+
+.binhluan input {
+    margin-bottom: 20px;
+}
+
+/* New Articles Section Below */
+.news-articles {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.news-item {
+    display: flex;
+    gap: 20px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
+.lq-item {
+    display: flex;
+    gap: 20px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
+
+.news-item img {
+    width: 150px;
+    height: 100px;
+    object-fit: cover;
+}
+
+.lq-item img {
+    width: 110px;
+    height: 66px;
+    object-fit: cover;
+}
+
+.news-item-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.lq-item-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.news-item-content h3 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.news-item-content p {
+    font-size: 14px;
+    color: #555;
+}
+
+.lq-item-content p {
+    color: #555;
+    padding-left: 7px;
+}
+
+.news-item-content span {
+    color: #888;
+    font-size: 12px;
+    align-self: flex-end;
+}
+
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.pagination button {
+    border: none;
+    background-color: transparent;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.pagination button.active {
+    background-color: #a21717;
+    color: white;
+    border-radius: 5px;
+}
+
+.pagination button:hover {
+    background-color: #f2f2f2;
+}
+
+@media (max-width: 768px) {
+    .news-container {
+        flex-direction: column;
+    }
+
+    .main-content {
+        width: 100%;
+        margin-right: 0;
+    }
+
+    .news-sidebar {
+        width: 100%;
+        padding-left: 0;
+        margin-top: 20px;
+        border-left: none;
+        border-top: 1px solid #ddd;
+    }
+
+    .news-item {
+        flex-direction: column;
+    }
+
+    .pagination {
+        margin-top: 10px;
+    }
+}
