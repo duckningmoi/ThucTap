@@ -56,7 +56,7 @@
                                 <td>{{ $post['name'] }}</td>
                                 <td>
                                     @if ($post['image'])
-                                        <img src="{{ Storage::url($post['image']) }}" alt="Hình ảnh" width="100">
+                                    <img src="{{ Storage::url($post['image']) }}" alt="Hình ảnh" width="100">
                                     @else
                                         Không có ảnh
                                     @endif
