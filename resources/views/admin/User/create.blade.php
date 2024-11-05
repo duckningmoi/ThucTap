@@ -57,6 +57,20 @@ Thêm bài viết
                             <input type="password" class="form-control" id="password_confirmation" placeholder="Xác nhận mật khẩu" name="password_confirmation" required>
                         </div>
                     </div>
+                    <div class="form-group mb-3">
+                        <div class="form-group mb-4">
+                            <label for="basicSelect" class="form-label">Phân quyền</label>
+                            <select class="form-select" id="basicSelect" name="role_id">
+                                <option value="">--Chọn--</option>
+                                @foreach ($roles as $role)
+                                    <option value="{{ $role['_id'] }}">{{ $role['name'] }}</option>
+                                @endforeach
+                            </select>
+                            @error('role_id')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
                 </div>
 
                 <div class="d-flex justify-content-end">

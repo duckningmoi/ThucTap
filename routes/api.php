@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Api\ApiAuthenticateController;
 use App\Http\Controllers\Api\ApiPostController;
+
+use App\Http\Controllers\Api\LoginGoogleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::get('/',[ApiPostController::class,'Trangchu'])->name('trangchu');
+Route::get('/posts',[ApiPostController::class,'Trangchu'])->name('trangchu');
 Route::get('/category',[ApiPostController::class,'category'])->name('abc');
 Route::get('/post/{id_category}',[ApiPostController::class,'filterPost'])->name('abc');
 Route::get('/search-posts', [ApiPostController::class, 'searchPosts']);
@@ -28,4 +30,13 @@ Route::post('login',[ApiAuthenticateController::class,'login']);
 Route::post('register',[ApiAuthenticateController::class,'register']);
 Route::post('logout',[ApiAuthenticateController::class,'logout'])->middleware('auth:sanctum');
 Route::post('/comments/{slug}', [ApiPostController::class, 'PostComment']);
+// login by google 
+Route::middleware(['web'])->group(function () {
+    Route::controller(LoginGoogleController::class)->group(function () {
+        Route::get('auth/google', 'redirectToGoogle')->name('auth.google');
+        Route::get('auth/google/callback', 'handleGoogleCallback');
+    });
+});
+
+
 
