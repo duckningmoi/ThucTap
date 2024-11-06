@@ -18,7 +18,7 @@ const Header = () => {
             <Nav className="mr-auto">
               <Nav.Link href="/"><HomeOutlined /></Nav.Link>
               <Nav.Link href="tintuc">Tin tức</Nav.Link>
-              <Nav.Link href="#link">Tuyển sinh</Nav.Link>
+              <Nav.Link href="/post/${category._id}">Tuyển sinh</Nav.Link>
               <Nav.Link href="#link">Chân dung</Nav.Link>
               <Nav.Link href="#link">Du học</Nav.Link>
               <Nav.Link href="#link">Thảo luận</Nav.Link>

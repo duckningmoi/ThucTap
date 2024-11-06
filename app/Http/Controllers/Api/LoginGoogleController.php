@@ -92,15 +92,16 @@ class LoginGoogleController extends Controller
 
     public function handleGoogleCallback()
     {
+        
         try {
             $user = Socialite::driver('google')->user();
             // Tìm user bằng email
-            $finduser = DB::collection('users')->where('email', $user->email)->first();
+            $finduser = DB::collection('user')->where('email', $user->email)->first();
 
             if ($finduser) {
                 // Nếu tìm thấy người dùng, có thể cập nhật trường google_id
                 if (!isset($finduser['google_id'])) {
-                    DB::collection('users')->where('_id', $finduser['_id'])->update([
+                    DB::collection('user')->where('_id', $finduser['_id'])->update([
                         'google_id' => $user->id
                     ]);
                 }
@@ -113,7 +114,7 @@ class LoginGoogleController extends Controller
                 ]);
             } else {
                 // Tạo user mới nếu chưa tồn tại
-                $newUser = DB::collection('users')->insert([
+                $newUser = DB::collection('user')->insert([
                     'name' => $user->name,
                     'email' => $user->email,
                     'google_id' => $user->id,
@@ -136,9 +137,10 @@ class LoginGoogleController extends Controller
                 ]);
             }
         } catch (Exception $e) {
+            \Log::error('Google login error: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
-                'message' => $e->getMessage(),
+                'message' => 'Đã xảy ra lỗi trong quá trình đăng nhập.',
             ], 500);
         }
     }
@@ -147,5 +149,14 @@ class LoginGoogleController extends Controller
     {
         
         return bin2hex(random_bytes(40)); 
+    }
+
+
+    public function googleDetail(string $google_id){
+        $post = DB::collection('user')->where('google_id', $google_id)->first();
+        return response()->json([
+            'message' =>'Thành công',
+            'post'=>$post,
+        ]);
     }
 }

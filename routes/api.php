@@ -30,6 +30,9 @@ Route::post('login',[ApiAuthenticateController::class,'login']);
 Route::post('register',[ApiAuthenticateController::class,'register']);
 Route::post('logout',[ApiAuthenticateController::class,'logout'])->middleware('auth:sanctum');
 Route::post('/comments/{slug}', [ApiPostController::class, 'PostComment']);
+Route::post('register',[ApiAuthenticateController::class,'register']);
+Route::get('/account/{google_id}',[LoginGoogleController::class,'googleDetail']);
+
 // login by google 
 Route::middleware(['web'])->group(function () {
     Route::controller(LoginGoogleController::class)->group(function () {
