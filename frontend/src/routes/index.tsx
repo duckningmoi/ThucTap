@@ -12,7 +12,7 @@ const Routers= () => {
     return (
         <Routes>
         <Route path="/" element={<Layouttintuc />} ></Route>
-        <Route path="/tintuc" element={<Tintuc />} ></Route>
+        <Route path="/post/:id_category" element={<Tintuc />} ></Route>
         <Route path="/detail/:slug" element={<NewsLayout />} ></Route>
         <Route path="/register" element={<Register />} ></Route>
         <Route path="/login" element={<Login />} ></Route>

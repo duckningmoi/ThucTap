@@ -3,6 +3,7 @@ import axios, { AxiosError } from 'axios';
 import { Button, Input, message } from 'antd';
 import { MailOutlined, LockOutlined, EyeInvisibleOutlined, EyeTwoTone, UserOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
+import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 
 const Register: React.FC = () => {
   const [email, setEmail] = useState<string>('');
@@ -66,7 +67,7 @@ const Register: React.FC = () => {
     if (valid) {
       try {
         const response = await axios.post('http://localhost:8000/api/register', {
-          name: "Tên người dùng", // Thêm trường 'name' nếu cần
+          name, // Thêm trường 'name' nếu cần
           email,
           password,
         });
@@ -95,9 +96,40 @@ const Register: React.FC = () => {
     }
   };
 
+  const handleGoogleSuccess = async (response: any) => {
+    try {
+      const googleToken = response.credential;
+      const res = await axios.post('http://localhost:8000/auth/google', { token: googleToken });
+      
+      const { token, user, message: successMessage } = res.data;
+      message.success(successMessage);
+
+      localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(user));
+      
+      navigate('/login');
+    } catch (error) {
+      message.error('Đăng ký bằng Google không thành công. Vui lòng thử lại.');
+    }
+  };
+
+  const handleGoogleFailure = () => {
+    message.error('Đăng ký bằng Google thất bại.');
+  };
+
   return (
+    <GoogleOAuthProvider clientId="311724826104-v19b2fi0tu7nc0i6j7inaoaqqrj5tpts.apps.googleusercontent.com">
     <div className="register-container">
       <h2>Đăng ký</h2>
+
+      <GoogleLogin
+  onSuccess={handleGoogleSuccess}
+  onError={handleGoogleFailure}
+  containerProps={{
+    style: { display: 'flex', alignItems: 'center', justifyContent: 'center' },
+    className: 'google-login-container'
+  }}
+/>
 
       <Input
         size="large"
@@ -145,10 +177,12 @@ const Register: React.FC = () => {
         Đăng ký
       </Button>
 
+      
       <div className="footer">
         <span>Đã có tài khoản? <a href="/login">Đăng nhập</a></span>
       </div>
     </div>
+    </GoogleOAuthProvider>
   );
 };
 

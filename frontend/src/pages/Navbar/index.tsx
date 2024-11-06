@@ -3,13 +3,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faUser, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 
+interface Weather {
+  temp: number;
+  description: string;
+}
 // API key từ OpenWeatherMap (bạn cần đăng ký tại https://openweathermap.org/api)
-const API_KEY = 'YOUR_OPENWEATHERMAP_API_KEY';
+const API_KEY = 'YOUR_REAL_API_KEY_HERE';
 
 const Navbar = () => {
-  const [currentDate, setCurrentDate] = useState(new Date());
-  const [weather, setWeather] = useState(null);
-  const [searchQuery, setSearchQuery] = useState('');
+const [currentDate, setCurrentDate] = useState(new Date());
+const [weather, setWeather] = useState<Weather | null>(null);
+const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     // Cập nhật thời gian mỗi giây
@@ -25,25 +29,28 @@ const Navbar = () => {
   }, []);
 
   const fetchWeather = async () => {
-    // Sử dụng OpenWeatherMap API để lấy thông tin thời tiết
-    const city = 'Hanoi'; // Bạn có thể thay đổi tên thành phố hoặc sử dụng geolocation
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${API_KEY}`;
+  const city = 'Hanoi';
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${API_KEY}`;
 
-    try {
-      const response = await fetch(url);
-      const data = await response.json();
-      if (data && data.weather && data.main) {
-        setWeather({
-          temp: data.main.temp,
-          description: data.weather[0].description,
-        });
-      }
-    } catch (error) {
-      console.error('Lỗi khi lấy thông tin thời tiết:', error);
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
-  };
+    const data = await response.json();
+    if (data && data.weather && data.main) {
+      setWeather({
+        temp: data.main.temp,
+        description: data.weather[0].description,
+      });
+    }
+  } catch (error) {
+    console.error('Lỗi khi lấy thông tin thời tiết:', error);
+  }
+};
 
-  const handleSearch = (e) => {
+
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Xử lý tìm kiếm ở đây, có thể gọi API hoặc điều hướng đến trang kết quả tìm kiếm
     console.log('Tìm kiếm:', searchQuery);
