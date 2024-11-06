@@ -40,7 +40,7 @@
                             <th>Nội Dung</th>
                             <th>Địa Điểm</th>
                             <th>Trạng Thái</th>
-                            <th>Người Xem</th>
+                       
                             <th>ID Người Dùng</th>
                             <th>ID Danh Mục</th>
                             <th>Action</th>
@@ -66,8 +66,8 @@
                                 <td>
                                     {!! $post['is_approved'] == 1 ? '<span class="badge bg-success">Được Đăng</span>' : '<span class="badge bg-danger">Không Được Đăng</span>' !!}
                                 </td>
-                                <td>{{ $post['viewer'] ?? 0 }}</td>
-                                <td>{{ $post['user_id'] }}</td>
+                                <td>{{ $post['view'] ?? 0 }}</td>
+                              
                                 <td>
                                     @php
                                         $categoryName = $categories[$post['category_id']] ?? 'Không có danh mục';
