@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 class ApiAuthenticateController extends Controller
@@ -91,6 +92,6 @@ class ApiAuthenticateController extends Controller
     private function createTokenForUser($user)
     {
       
-        return 'dummy-token-for-' . $user['_id']; 
+        return 'dummy-token-for-' . $user['_id']  . Str::random(5); 
     }
 }

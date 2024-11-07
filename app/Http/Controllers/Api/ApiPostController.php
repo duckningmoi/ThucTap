@@ -23,13 +23,52 @@ class ApiPostController extends Controller
         $post = DB::table('posts')
             ->where('is_approved', "1")
             ->orderBy('created_at', 'desc')
+            ->skip(8)
             ->paginate(5);
-            // ->get();
-        // foreach ($post as $posts) {
-        //     $posts['imageUrl'] = 'http://127.0.0.1:8000/storage/' . $post['image'];
-        // }
+        // ->get();
+
+        $postHot = DB::table('posts')
+            ->where('is_approved', "1")
+            ->orderBy('created_at', 'desc')
+            ->first();
+        $postHot3 = DB::table('posts')
+            ->where('is_approved', "1")
+            ->orderBy('created_at', 'desc')
+            ->skip(1)
+            ->limit(3)
+            ->get();
+        $postHot5 = DB::table('posts')
+            ->where('is_approved', "1")
+            ->orderBy('created_at', 'desc')
+            ->skip(4)
+            ->limit(5)
+            ->get();
+        $adds = DB::table('adss')
+            ->where('active', "active")
+            ->orderBy('_id', 'desc')
+            ->limit(2)
+            ->get();
+        $addsRight = DB::table('adss')
+            ->where('active', "active")
+            ->orderBy('_id', 'desc')
+            ->skip(4) // Bỏ qua 4 quảng cáo đầu tiên (2 nhóm trước)
+            ->limit(2) // Lấy 2 quảng cáo tiếp theo
+            ->get();
+
+        $addsLeft = DB::table('adss')
+            ->where('active', "active")
+            ->orderBy('_id', 'desc')
+            ->skip(2) // Bỏ qua 2 quảng cáo đầu tiên
+            ->limit(2) // Lấy 2 quảng cáo tiếp theo
+            ->get();
         return response()->json([
-            'post' => $post
+            'postHot' => $postHot,
+            'postHot3' => $postHot3,
+            'postHot5' => $postHot5,
+            'post' => $post,
+            'adds' => $adds,
+            'addsLeft' => $addsLeft,
+            'addsRight' => $addsRight,
         ], 200);
     }
 
