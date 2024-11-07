@@ -1,19 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faUser, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 interface Weather {
   temp: number;
   description: string;
 }
+
 // API key từ OpenWeatherMap (bạn cần đăng ký tại https://openweathermap.org/api)
 const API_KEY = 'YOUR_REAL_API_KEY_HERE';
 
 const Navbar = () => {
-const [currentDate, setCurrentDate] = useState(new Date());
-const [weather, setWeather] = useState<Weather | null>(null);
-const [searchQuery, setSearchQuery] = useState('');
+  const [currentDate, setCurrentDate] = useState(new Date());
+  const [weather, setWeather] = useState<Weather | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const navigate = useNavigate();
+
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    navigate(`/search?keyword=${searchQuery}`);
+  };
 
   useEffect(() => {
     // Cập nhật thời gian mỗi giây
@@ -29,31 +36,24 @@ const [searchQuery, setSearchQuery] = useState('');
   }, []);
 
   const fetchWeather = async () => {
-  const city = 'Hanoi';
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${API_KEY}`;
+    const city = 'Hanoi';
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${API_KEY}`;
 
-  try {
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      if (data && data.weather && data.main) {
+        setWeather({
+          temp: data.main.temp,
+          description: data.weather[0].description,
+        });
+      }
+    } catch (error) {
+      console.error('Lỗi khi lấy thông tin thời tiết:', error);
     }
-    const data = await response.json();
-    if (data && data.weather && data.main) {
-      setWeather({
-        temp: data.main.temp,
-        description: data.weather[0].description,
-      });
-    }
-  } catch (error) {
-    console.error('Lỗi khi lấy thông tin thời tiết:', error);
-  }
-};
-
-
-  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    // Xử lý tìm kiếm ở đây, có thể gọi API hoặc điều hướng đến trang kết quả tìm kiếm
-    console.log('Tìm kiếm:', searchQuery);
   };
 
   return (
@@ -61,7 +61,7 @@ const [searchQuery, setSearchQuery] = useState('');
       <div className="d-flex align-items-center">
         {/* Phần Logo và Ngày tháng */}
         <img
-          src="https://vnexpress.net/favicon.ico" // Logo của VNExpress
+          src="https://vnexpress.net/favicon.ico"
           alt="VNExpress Logo"
           style={{ height: '24px', marginRight: '10px' }}
         />
@@ -107,10 +107,8 @@ const [searchQuery, setSearchQuery] = useState('');
           </div>
 
           {/* Đăng nhập */}
-          <Link to='/login'>
-          <a className="mx-3 text-muted text-decoration-none">
+          <Link to='/login' className="mx-3 text-muted text-decoration-none">
             <FontAwesomeIcon icon={faUser} /> Đăng nhập
-          </a>
           </Link>
         </nav>
       </div>
