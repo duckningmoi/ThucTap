@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\ApiAuthenticateController;
 use App\Http\Controllers\Api\ApiPostController;
+use App\Http\Controllers\ShareController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -28,4 +29,4 @@ Route::post('login',[ApiAuthenticateController::class,'login']);
 Route::post('register',[ApiAuthenticateController::class,'register']);
 Route::post('logout',[ApiAuthenticateController::class,'logout'])->middleware('auth:sanctum');
 Route::post('/comments/{slug}', [ApiPostController::class, 'PostComment']);
-
+Route::post('/share/facebook', [ShareController::class, 'shareLink']);

@@ -121,8 +121,8 @@ class ApiPostController extends Controller
             'content' => $context,
             'created_at' => Carbon::now()->format('Y-m-d'),
         ];
-        $commentId = DB::collection('comments')->insertGetId($PostComment);
 
+        $commentId = DB::collection('comments')->insertGetId($PostComment);
         return response()->json([
             'message' => 'Comment thành công',
             'comment_id' => $commentId,

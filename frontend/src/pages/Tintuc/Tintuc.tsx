@@ -31,7 +31,6 @@ const Tintuc = () => {
             </p>
           </div>
         </div>
-
         {/* New Section Below Main Content */}
         <div className="news-articles">
           <div className="news-item">
