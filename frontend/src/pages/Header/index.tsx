@@ -2,7 +2,7 @@ import { Category, fetchCategorys } from '@/interface/Product';
 import { HomeOutlined } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 const Header = () => {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -42,21 +42,19 @@ const Header = () => {
             <Nav className="mr-auto">
               <Nav.Link href="/"><HomeOutlined /></Nav.Link>
 
-<!--               <Nav.Link href="tintuc">Tin tức</Nav.Link>
-              <Nav.Link href="/post/${category._id}">Tuyển sinh</Nav.Link>
-              <Nav.Link href="#link">Chân dung</Nav.Link>
-              <Nav.Link href="#link">Du học</Nav.Link>
-              <Nav.Link href="#link">Thảo luận</Nav.Link>
-              <Nav.Link href="#link">Học Tiếng Anh</Nav.Link>
-              <Nav.Link href="#link">Giáo dục 4.0</Nav.Link> -->
+
 
               {loading ? (
                 <Nav.Link disabled>Loading...</Nav.Link> // Hoặc hiển thị spinner
               ) : (
                 categories.map((category) => (
-                  <Nav.Link key={category.id} >
+                  <NavLink
+                    key={category.id}
+                    to={`/post/${category._id.$oid}`}
+                    className="no-underline mt-1 hover:no-underline text-dark"
+                  >
                     {category.name}
-                  </Nav.Link>
+                  </NavLink>
                 ))
               )}
 

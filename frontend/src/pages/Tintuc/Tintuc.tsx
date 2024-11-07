@@ -9,6 +9,7 @@ import { useParams } from 'react-router-dom'
 interface Post {
     id: string;
     name: string;
+    tieude: string;
     location: string;
     content: string;
     category_id: string;
@@ -41,9 +42,10 @@ const Tintuc = () => {
   }, [id_category]);
   return (
     <>
+    <Banner/>
     <Navbar/>
     <Header/>
-    <Banner/>
+    
     <div className="container my-4">
       
 
@@ -54,18 +56,24 @@ const Tintuc = () => {
                             <p>Loading...</p> // Hiển thị thông báo loading
                         ) : (
                             posts.map((post) => (
-                                <div className="news-content" key={post.id}>
-                                    {/* <div className="image-section">
-                                        <img src={post.image} alt={post.name} />
-                                    </div> */}
-                                    <div className="content-section">
-                                        <h2>{post.name}</h2>
-                                        <p>{post.content}</p>
-                                    </div>
-                                </div>
+                                
+                                <div className="news-articles">
+          <div className="news-item" key={post.id}>
+            <img src={post.image} alt={post.name} />
+            <div className="news-item-content">
+              <h3>{post.name}</h3>
+              <p>
+                {post.content}
+              </p>
+            </div>
+          </div>
+
+          
+        </div>
                             ))
                         )}
                     </div>
+                    
 
       {/* Sidebar content */}
       <div className="news-sidebar">
