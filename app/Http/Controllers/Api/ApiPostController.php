@@ -132,15 +132,15 @@ class ApiPostController extends Controller
         $category = DB::table('categories');
         if ($request->filled('keyword')) {
             $cate = $category->where('name', 'LIKE', '%' . $request->keyword . '%')->select('_id')->first();
-            $oid = (string) $cate['_id'];
+            if ($cate) {
+                $oid = (string)$cate['_id'];
+            }
             $query->orWhere('name', 'LIKE', '%' . $request->keyword . '%')
                 ->orWhere('location', 'LIKE', '%' . $request->keyword . '%')
                 ->orWhere('category_id', $oid);
             $results = $query->get();
             return response()->json($results);
         }
-
-
     }
 
     public function PostComment(Request $request, string $slug)
