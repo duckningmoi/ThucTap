@@ -25,6 +25,7 @@ const NewsLayout = () => {
     const [posts, setDetail] = useState<Posts | null>(null);
     const [postsCategory, setDetailCategory] = useState<Posts[]>([]);
     const [postView, setDetailView] = useState<Posts[]>([]);
+    const [comments, setComments] = useState([]);
     const token = localStorage.getItem('token');
 
 
@@ -52,6 +53,7 @@ const NewsLayout = () => {
             setDetail(response.data.post);
             setDetailCategory(response.data.post_category);
             setDetailView(response.data.postView);
+            setComments(response.data.comments);
         } catch (error) {
             console.error("Error fetching post details:", error);
         }
@@ -87,8 +89,10 @@ const NewsLayout = () => {
             });
             console.log('Bình luận đã được gửi:', response.data);
             setAddComment({content: '', slug: '', user_id: addComment.user_id});
+            message.success('Bình luận đã được gửi thành công!');
         } catch (error) {
             console.error("Lỗi khi gửi bình luận:", error);
+            message.error('Gửi bình luận thất bại. Vui lòng thử lại.');
         }
     }
     // console.log(posts);
@@ -114,29 +118,38 @@ const NewsLayout = () => {
                     <div className='back-icon'>
                         <button><ArrowLeftOutlined/></button>
                     </div>
-                    <div className='binhluan'>
-                        <h2>Bình luận</h2>
+                    <div className="comment-section">
+                <h2>Bình luận</h2>
+                <form onSubmit={handleSubmit} className="comment-form">
+                    <input
+                        type="text"
+                        maxLength={50}
+                        name="content"
+                        placeholder="Chia sẻ ý kiến của bạn"
+                        onChange={handleChangeComment}
+                        value={addComment.content}
+                        className="comment-input"
+                    />
+                    <button type="submit" className="submit-button">Gửi</button>
+                </form>
 
-                        <form onSubmit={handleSubmit}>
-                            <div className="input">
-                                <div style={{display: 'flex', flexDirection: 'column', gap: '32px'}}>
-                                    <input
-                                        type="text"
-                                        maxLength={50}
-                                        name="content"
-                                        className="border-2 border-black rounded-lg p-2"
-                                        placeholder="Add your comment here"
-                                        onChange={handleChangeComment}
-                                        value={addComment.content}
-                                    />
-                                    <input type="hidden" name="user_id" value={addComment.user_id}
-                                           onChange={handleChangeComment}
-                                    />
-                                </div>
+                {/* Display Comments */}
+                <div className="comments-list">
+                    {comments.map((comment, index) => (
+                    <div key={index} className="comment">
+                        {/* <div className="avatar">H</div> */}
+                        <div className="comment-body">
+                            <div className="comment-author">{comment.user.name}</div>
+                            <div className="comment-text">{comment.content}</div>
+                            <div className="comment-actions">
+                               <span className="comment-time">{comment.created_at}</span>
+                                
                             </div>
-                            <button type="submit">Gửi</button>
-                        </form>
+                        </div>
                     </div>
+                    ))}
+                </div>
+            </div>
                 </div>
 
                 {/* Sidebar content */}

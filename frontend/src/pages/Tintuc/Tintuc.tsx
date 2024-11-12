@@ -9,6 +9,7 @@ import {useParams} from 'react-router-dom'
 interface Post {
     id: string;
     name: string;
+    view: number;
     tieude: string;
     location: string;
     content: string;
@@ -20,9 +21,9 @@ interface Post {
 const Tintuc = () => {
 
     const [posts, setPosts] = useState<Post[]>([]);
-    const {id_category} = useParams<{ id_category: string }>();
+    const { id_category } = useParams<{ id_category: string }>();
     const [loading, setLoading] = useState<boolean>(true);
-
+    const [postView, setDetailView] = useState<Post[]>([]);
 
     const getPostsById = async (id_category: string) => {
         // console.log(slug);
@@ -30,6 +31,7 @@ const Tintuc = () => {
             const response = await axios.get(`http://127.0.0.1:8000/api/post/${id_category}`);
             // console.log(response.data);
             setPosts(response.data.post);
+            setDetailView(response.data.postView);
             setLoading(false);
         } catch (error) {
             console.error("Error fetching post details:", error);
@@ -43,9 +45,9 @@ const Tintuc = () => {
     }, [id_category]);
     return (
         <>
-            <Banner/>
-            <Navbar/>
-            <Header/>
+            <Banner />
+            <Navbar />
+            <Header />
 
             <div className="container my-4">
                 <div className="flex ">
@@ -76,43 +78,21 @@ const Tintuc = () => {
                     <div className="news-sidebar">
                         <h3>Xem nhiều</h3>
                         <ul>
-                            <li>
-                                <a href="#1">Phú Đức vô địch Olympia 2024</a>
-                                <span>140</span>
-                            </li>
-                            <li>
-                                <a href="#2">Nhà vô địch Olympia: Bí quyết là sự gan lì và chiến thuật thông minh</a>
-                                <span>150</span>
-                            </li>
-                            <li>
-                                <a href="#3">Trường đại học thu sai 37 tỷ đồng học phí</a>
-                                <span>88</span>
-                            </li>
-                            <li>
-                                <a href="#3">Trường đại học thu sai 37 tỷ đồng học phí</a>
-                                <span>88</span>
-                            </li>
-                            <li>
-                                <a href="#3">Trường đại học thu sai 37 tỷ đồng học phí</a>
-                                <span>88</span>
-                            </li>
-                            <li>
-                                <a href="#3">Trường đại học thu sai 37 tỷ đồng học phí</a>
-                                <span>88</span>
-                            </li>
-                            <li>
-                                <a href="#3">Trường đại học thu sai 37 tỷ đồng học phí</a>
-                                <span>88</span>
-                            </li>
-                            <li>
-                                <a href="#3">Trường đại học thu sai 37 tỷ đồng học phí</a>
-                                <span>88</span>
-                            </li>
-                        </ul>
+    {postView && postView.length > 0 ? (
+        postView.map((postViews) => (
+            <li key={postViews.id}>
+                <a href={`/detail/${postViews.slug}`}>{postViews.name}</a>
+                <span>{postViews.view}</span>
+            </li>
+        ))
+    ) : (
+        <p>No popular posts available</p> // Hiển thị thông báo nếu không có dữ liệu
+    )}
+</ul>
                     </div>
                 </div>
             </div>
-            <Footer/>
+            <Footer />
         </>
     )
 }

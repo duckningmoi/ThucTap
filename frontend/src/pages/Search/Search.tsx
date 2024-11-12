@@ -75,7 +75,7 @@ const Search: React.FC = () => {
             <div className="news-item-content">
               <h3>{post.name}</h3>
               <p>
-                {post.content}
+                <p>{post.content?.replace(/<\/?[^>]+(>|$)/g, "").split(" ").slice(0, 50).join(" ") + "..."}</p>
               </p>
             </div>
             <img src={post.image} alt={post.name} />

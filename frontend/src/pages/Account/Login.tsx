@@ -62,10 +62,12 @@ const Login: React.FC = () => {
             message.success(successMessage);
 
             // Store token and user info if "Remember Me" is checked
-            if (rememberMe) {
-                localStorage.setItem('token', token);
-                localStorage.setItem('user', JSON.stringify(user));
-            }
+            localStorage.setItem('token', token);
+            localStorage.setItem('user', JSON.stringify(user));
+            // if (rememberMe) {
+            //     localStorage.setItem('token', token);
+            //     localStorage.setItem('user', JSON.stringify(user));
+            // }
 
             // Redirect to homepage
             navigate('/');

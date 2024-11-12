@@ -28,7 +28,7 @@ Route::get('/search-posts', [ApiPostController::class, 'searchPosts']);
 Route::get('/postDetail/{slug}',[ApiPostController::class,'PostDetail']);
 Route::post('login',[ApiAuthenticateController::class,'login']);
 Route::post('register',[ApiAuthenticateController::class,'register']);
-Route::post('logout',[ApiAuthenticateController::class,'logout'])->middleware('auth:sanctum');
+Route::post('logout',[ApiAuthenticateController::class,'logout']);
 Route::post('/comments/{slug}', [ApiPostController::class, 'PostComment']);
 Route::post('register',[ApiAuthenticateController::class,'register']);
 Route::get('/account/{google_id}',[LoginGoogleController::class,'googleDetail']);
@@ -40,6 +40,3 @@ Route::middleware(['web'])->group(function () {
         Route::get('auth/google/callback', 'handleGoogleCallback');
     });
 });
-
-
-
