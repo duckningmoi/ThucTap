@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class ApiPostController extends Controller
 {
@@ -80,30 +81,33 @@ class ApiPostController extends Controller
         ], 200);
     }
     // bài viết theo danh mục 
-    public function PostDetail(Request $request, string $slug)
-    {
-        $post = DB::collection('posts')->where('slug', $slug)->first();
-        if (!$post) {
-            return response()->json([
-                'message' => 'Không có bản ghi nào'
-            ], 404);
+    public function logout(Request $request)
+{
+    try {
+        $user_id = $request->user_id;
+        if ($user_id) {
+            $user = DB::connection('mongodb')->collection('user')->where('_id', $user_id)->first();
+            if ($user) {
+                $deletedCount = DB::connection('mongodb')->collection('personal_access_tokens')
+                    ->where('tokenable_id', $user_id)
+                    ->delete();
+                Log::info("Deleted token count: " . $deletedCount);
+                return response()->json([
+                    'message' => 'Đăng xuất thành công',
+                    'deleted_count' => $deletedCount,
+                ]);
+            }
+            return response()->json(['message' => 'Người dùng không tìm thấy'], 404);
         }
-        // $post_id = $post['_id'];
-        $category_id = $post['category_id'];
-        $post_category = DB::collection('posts')->where('category_id', $category_id)->get();
-        $post_id = (string) $post['_id'];
-        $postView = DB::collection('posts')
-            ->orderBy('view', 'desc')->take(4)->get();
-        $comments = DB::collection('comments')->where('post_id', $post_id)->get()->toArray();
-        DB::collection('posts')->where('slug', $slug)->update(['view' => $post['view'] + 1]);
-        return response()->json([
-            'post' => $post,
-            'post_id' => $post_id,
-            'comments' => $comments,
-            'post_category' => $post_category,
-            'postView' => $postView,
-        ], 200);
+        Log::error('Thiếu user_id trong yêu cầu.');
+        return response()->json(['message' => 'Yêu cầu không hợp lệ'], 400);
+    } catch (\Exception $e) {
+        Log::error('Lỗi khi đăng xuất: ' . $e->getMessage());
+        return response()->json(['message' => 'Lỗi server'], 500);
     }
+}
+
+
     public function filterPost($id_category)
     {
 
